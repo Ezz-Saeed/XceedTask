@@ -47,8 +47,11 @@ namespace XceedTask
             try
             {
                 var context = service.GetRequiredService<AppDbContext>();
+                var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = service.GetRequiredService<UserManager<AppUser>>();
                 await context.Database.MigrateAsync();
                 await CategorySeed.SeedAsync(context, loggerFactory);
+                await IdentitySeed.SeedAsync(roleManager, userManager, context, loggerFactory);
             }
             catch (Exception ex)
             {
