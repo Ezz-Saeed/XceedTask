@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using XceedTask.Models;
 using XceedTask.ViewModels;
 
@@ -46,6 +48,7 @@ namespace XceedTask.Controllers
                     ModelState.AddModelError("", error.Description);
                 return View(registerViewModel);
             }
+            await userManager.AddClaimAsync(appUser, new Claim(JwtRegisteredClaimNames.Email, appUser.Email));
             await userManager.AddToRoleAsync(appUser, "user");
             await signInManager.SignInAsync(appUser, isPersistent: false);
 

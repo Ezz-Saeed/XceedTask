@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using XceedTask.Data;
 using XceedTask.Data.Seeds;
 using XceedTask.Models;
+using XceedTask.Services;
 
 namespace XceedTask
 {
@@ -19,6 +20,8 @@ namespace XceedTask
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
             builder.Services.AddIdentity<AppUser, IdentityRole>()
                .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
+            builder.Services.AddScoped<IProductService,  ProductService>();
 
 
             var app = builder.Build();
