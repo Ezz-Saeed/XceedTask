@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using XceedTask.Data;
+using XceedTask.Models;
+
 namespace XceedTask
 {
     public class Program
@@ -8,6 +13,11 @@ namespace XceedTask
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            var connection = builder.Configuration.GetConnectionString("connection");
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+            builder.Services.AddIdentity<AppUser, IdentityRole>()
+               .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
             var app = builder.Build();
 

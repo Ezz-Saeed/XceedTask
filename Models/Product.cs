@@ -10,6 +10,7 @@ namespace XceedTask.Models
         [Required]
         [MaxLength(200)]
         public string Name { get; set; }
+        [Required]
         public decimal Price { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.Now;
         public DateTime StartDate { get; set; }
