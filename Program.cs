@@ -20,6 +20,7 @@ namespace XceedTask
             builder.Services.AddIdentity<AppUser, IdentityRole>()
                .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
