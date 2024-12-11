@@ -40,7 +40,7 @@ namespace XceedTask.Data.Seeds
                 if (!userManager.Users.Any())
                 {
                     var appUser = new AppUser { Id = Guid.NewGuid().ToString(), Email = "admin@test.com", UserName = "Admin" };
-                    await userManager.CreateAsync(appUser);
+                    await userManager.CreateAsync(appUser, "Ab$$123");
 
                     var adminRole = await roleManager.Roles.SingleOrDefaultAsync(r => r.Name == "admin");
                     var userRole = new IdentityUserRole<string> { RoleId = adminRole!.Id, UserId = appUser.Id };

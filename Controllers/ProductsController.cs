@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -9,8 +10,16 @@ using XceedTask.ViewModels;
 namespace XceedTask.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class ProductsController(IProductService productService, UserManager<AppUser> userManager) : Controller
+    public class ProductsController(IProductService productService, IMapper mapper,
+        UserManager<AppUser> userManager) : Controller
     {
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
+        {
+            var products = await productService.GetProducts();
+            return View(products);
+        }
+
         [HttpGet]
         public async Task<IActionResult> AddProduct()
         {
@@ -41,9 +50,38 @@ namespace XceedTask.Controllers
                 ModelState.AddModelError("", "Couldn't add product!");
                 return View(viewModel);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("GetProducts", "Products");
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateProduct(string id)
+        {
+            var product = await productService.GetProductById(id);
+            if(product is null) return NotFound();
+            var viewModel =  mapper.Map<Product, UpdateProductViewModel>(product);
+            viewModel.id = product.Id;
+            viewModel.CreationDate = product.CreationDate;
+
+            return View(viewModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateProduct(UpdateProductViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                viewModel.Categories = await productService.GetCategories();
+                return View(viewModel);
+            }
+            var product = await productService.UpdateProduct(viewModel);
+            if(product is null)
+            {
+                ModelState.AddModelError("", "Couldn't update product!");
+                return View(viewModel);
+            }
+            return RedirectToAction("GetProducts", "Products");
+        }
 
     }
 }

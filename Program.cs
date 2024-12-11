@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using XceedTask.Data;
 using XceedTask.Data.Seeds;
+using XceedTask.Helpers;
 using XceedTask.Models;
 using XceedTask.Services;
 
@@ -16,6 +17,8 @@ namespace XceedTask
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+            builder.Services.AddHttpContextAccessor();
             var connection = builder.Configuration.GetConnectionString("connection");
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
             builder.Services.AddIdentity<AppUser, IdentityRole>()
