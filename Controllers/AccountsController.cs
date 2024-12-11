@@ -51,5 +51,36 @@ namespace XceedTask.Controllers
 
             return RedirectToAction("Index","Home");
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult>Login(LoginViewModel loginViewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(loginViewModel);
+
+            var user = await userManager.FindByEmailAsync(loginViewModel.Email);
+            if(user is null)
+            {
+                ModelState.AddModelError("", "Unauthenticated user!");
+                return View(loginViewModel);
+            }
+
+            var result = await userManager.CheckPasswordAsync(user, loginViewModel.Password);
+            if (!result)
+            {
+                ModelState.AddModelError("", "Unauthenticated user!");
+                return View(loginViewModel);
+            }
+
+            await signInManager.SignInAsync(user, isPersistent: false);
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
