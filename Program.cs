@@ -1,13 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using XceedTask.Data;
+using XceedTask.Data.Seeds;
 using XceedTask.Models;
 
 namespace XceedTask
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,21 @@ namespace XceedTask
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            using var scope = app.Services.CreateScope();
+            var service = scope.ServiceProvider;
+            var loggerFactory = service.GetRequiredService<ILoggerFactory>();
+            try
+            {
+                var context = service.GetRequiredService<AppDbContext>();
+                await context.Database.MigrateAsync();
+                await CategorySeed.SeedAsync(context, loggerFactory);
+            }
+            catch (Exception ex)
+            {
+                var logger = loggerFactory.CreateLogger<Program>();
+                logger.LogError(ex, "an error occured during migration");
+            }
 
             app.Run();
         }
