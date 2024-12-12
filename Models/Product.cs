@@ -19,6 +19,7 @@ namespace XceedTask.Models
         public string UserId { get; set; }
         public AppUser User { get; set; }
         [ForeignKey(nameof(Category))]
+        [Display(Name ="Category")]
         public string CategoryId { get; set; }
         public Category Category { get; set; }
 

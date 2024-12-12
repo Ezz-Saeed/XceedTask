@@ -4,7 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
+<div class="col-4 form-group pt-4">
+    <label for="Category" class="form-label">Category</label>
+    <input id="category" type="text" class=" form-control" placeholder="Enter category" />
 
+    <a href="#" id="filterProducts" class="mt-2 btn btn-success" onclick="filterProducts()">
+        <i class="bi bi-plus-circle-dotted"></i>
+        Filter Products
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="mt-5"><p>No products to filter</p></div>
+}
+
+else{
 <table class="table table-bordered border-primary mt-5">
     <thead>
         <tr class="border-primary">
@@ -80,4 +95,17 @@
             </tr>
         }
     </tbody>
-</table>
+</table>}
+
+@section Scripts{
+    <script>
+        function filterProducts() {
+
+            const category = document.getElementById('category').value;
+
+            const url = `/Home/Index?category=${encodeURIComponent(category)}`;
+
+            window.location.href = url;
+        }
+    </script>
+}

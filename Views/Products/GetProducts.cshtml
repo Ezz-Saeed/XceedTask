@@ -9,7 +9,12 @@
     New Product
 </a>
 
+@if (!Model.Any())
+{
+    <div class="mt-5"><p>No products</p></div>
+}
 
+else{
 <table class="table table-bordered border-primary mt-5">
     <thead>
         <tr class="border-primary">
@@ -103,4 +108,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table>}
