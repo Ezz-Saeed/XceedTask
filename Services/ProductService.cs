@@ -46,7 +46,7 @@ namespace XceedTask.Services
 
         public async Task<Product> GetProductById(string id)
         {
-            var product = await context.Products.FindAsync(id);
+            var product = await context.Products.Include(p=>p.Category).Include(p=>p.User).SingleOrDefaultAsync(p=>p.Id==id);
             if (product is null) return null;
             
             return product;

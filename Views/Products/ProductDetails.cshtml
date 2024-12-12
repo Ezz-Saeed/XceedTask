@@ -1,0 +1,25 @@
+﻿@using XceedTask.Models
+@model Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="col-8 card border-primary rounded-4 mt-5 overflow-x-hidden">
+    <div class="card-body p-0">
+        <div class="row">
+            <div class="col-md-8 px-5 py-5 d-flex flex-column justify-content-between">
+                <div>
+                    <h1 class="text-primary fw-bolder">@Model.Name</h1>
+                    <h4 class="text-primary fw-bolder">$@Model.Price</h4>
+                    <span class="badge bg-info fs-5 mb-4">@Model.Category?.Name</span>
+                    <p class="fs-5">This product was added by @Model.User.UserName in @Model.CreationDate
+                    to be viewed start from @Model.StartDate for @Model.Duration days</p>
+
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
+ْ

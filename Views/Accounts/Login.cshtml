@@ -5,8 +5,10 @@
 }
 
 
-<div class="container">
-    <form asp-controller="Accounts" asp-action="Login">
+<div class="container" style="position: relative;
+    height: 100vh;">
+    <form  asp-controller="Accounts" asp-action="Login" style="position: absolute;width:50%;
+    height: 100vh;left:50%;top:50%;transform:translate(-50%, -50%)">
         <div class="row">
             <div class="col-md-6">
                 <div asp-validation-summary="All" class="text-danger"></div>

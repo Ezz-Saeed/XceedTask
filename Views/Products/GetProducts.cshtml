@@ -11,7 +11,7 @@
 
 @if (!Model.Any())
 {
-    <div class="mt-5"><p>No products</p></div>
+    <div class="mt-5"><p>No products to view</p></div>
 }
 
 else{
@@ -25,6 +25,7 @@ else{
             <th scope="col">Duration</th>
             <th scope="col">User</th>
             <th scope="col">Category</th>
+            <th scope="col">Details</th>
             <th scope="col">Update</th>
             <th scope="col">Delete</th>
         </tr>
@@ -45,7 +46,7 @@ else{
                 <td>
                     <div class="d-flex">
                         <div class="d-flex flex-column justify-content-center">
-                            <p>@product.Price</p>
+                            <p>$@product.Price</p>
                         </div>
                     </div>
                 </td>
@@ -90,18 +91,27 @@ else{
                     </div>
                 </td>
 
+                    <td>
+                        <div class="d-flex">
+                            <div class="d-flex flex-column justify-content-center">
+                                <a asp-action="ProductDetails" asp-controller="Products"
+                                   asp-route-id="@product.Id" class="btn btn-success text-light">Details</a>
+                            </div>
+                        </div>
+                    </td>
+
                 <td>
                     <div class="d-flex">
-                        <a asp-action="UpdateProduct" asp-controller="Products" asp-route-id="@product.Id" class="btn btn-primary rounded rounded-3 ">
-                            <i class="bi bi-pencil-fill">Update</i>
+                        <a asp-action="UpdateProduct" asp-controller="Products" asp-route-id="@product.Id" class="btn btn-primary  ">
+                            Update
                         </a>
                     </div>
                     
                 </td>
                 <td>
                     <div class="d-flex">
-                        <a asp-action="Delete" asp-controller="Products" asp-route-id="@product.Id" class="btn btn-danger rounded rounded-3">
-                            <i class="bi bi-trash3">Remove</i>
+                        <a asp-action="Delete" asp-controller="Products" asp-route-id="@product.Id" class="btn btn-danger ">
+                            Remove
                         </a>
                     </div>
                 </td>

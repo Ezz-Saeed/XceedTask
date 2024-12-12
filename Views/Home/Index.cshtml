@@ -16,7 +16,7 @@
 
 @if (!Model.Any())
 {
-    <div class="mt-5"><p>No products to filter</p></div>
+    <div class="mt-5"><p>No products to view</p></div>
 }
 
 else{
@@ -30,6 +30,7 @@ else{
             <th scope="col">Duration</th>
             <th scope="col">User</th>
             <th scope="col">Category</th>
+            <th scope="col">Details</th>
         </tr>
     </thead>
     <tbody>
@@ -48,7 +49,7 @@ else{
                 <td>
                     <div class="d-flex">
                         <div class="d-flex flex-column justify-content-center">
-                            <p>@product.Price</p>
+                            <p>$@product.Price</p>
                         </div>
                     </div>
                 </td>
@@ -92,10 +93,21 @@ else{
                         </div>
                     </div>
                 </td>
+
+                    <td>
+                        <div class="d-flex">
+                            <div class="d-flex flex-column justify-content-center">
+                                <a asp-action="ProductDetails" asp-controller="Products"
+                                   asp-route-id="@product.Id" class="btn btn-success text-light">Details</a>
+                            </div>
+                        </div>
+                    </td>
             </tr>
         }
     </tbody>
-</table>}
+</table>
+
+}
 
 @section Scripts{
     <script>

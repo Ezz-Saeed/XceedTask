@@ -104,5 +104,14 @@ namespace XceedTask.Controllers
             return RedirectToAction("GetProducts", "Products");
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> ProductDetails(string id)
+        {
+            var product = await productService.GetProductById(id);
+            if (product is null) return NotFound();
+            return View(product);
+        }
+
     }
 }
