@@ -13,7 +13,7 @@ namespace XceedTask.ViewModels
         [Required]
         public decimal Price { get; set; }
         public DateTime StartDate { get; set; }
-        public TimeSpan Duration { get; set; }
+        public int Duration { get; set; }
         [ForeignKey(nameof(Category))]
         public string CategoryId { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; } = Enumerable.Empty<SelectListItem>();

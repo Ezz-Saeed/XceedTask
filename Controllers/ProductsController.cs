@@ -16,7 +16,7 @@ namespace XceedTask.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
-            var products = await productService.GetProducts();
+            var products = await productService.GetProducts(p=>true);
             return View(products);
         }
 
@@ -74,12 +74,33 @@ namespace XceedTask.Controllers
                 viewModel.Categories = await productService.GetCategories();
                 return View(viewModel);
             }
-            var product = await productService.UpdateProduct(viewModel);
-            if(product is null)
+            var product = mapper.Map<UpdateProductViewModel,Product>(viewModel);
+            var updatedProduct = await productService.UpdateProduct(product);
+            if(updatedProduct is null)
             {
                 ModelState.AddModelError("", "Couldn't update product!");
                 return View(viewModel);
             }
+            return RedirectToAction("GetProducts", "Products");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var product = await productService.GetProductById(id);
+            if (product is null) return NotFound();
+            var viewModel = mapper.Map<Product, UpdateProductViewModel>(product);
+            viewModel.id = product.Id;
+            viewModel.CreationDate = product.CreationDate;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(UpdateProductViewModel viewModel)
+        {
+            var result = await productService.Delete(viewModel);
+
             return RedirectToAction("GetProducts", "Products");
         }
 

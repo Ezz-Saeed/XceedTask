@@ -1,51 +1,46 @@
 ﻿@using XceedTask.ViewModels
-@model UpdateProductViewModel
+@model AddProductViewModel
 @{
     ViewData["Title"] = "New product";
 }
 
-<h5><i class="bi bi-plus-circle-dotted"></i>New Meal</h5>
 
-<form asp-action="UpdateProduct" asp-controller="Products" enctype="multipart/form-data">
+<form asp-action="Delete" asp-controller="Products" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group pt-4">
                 <label asp-for="Name" class="form-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" disabled/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Price" class="form-label"></label>
-                <input asp-for="Price" class="form-control" />
+                <input asp-for="Price" class="form-control" disabled />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="StartDate" class="form-label"></label>
-                <input asp-for="StartDate" class="form-control" />
+                <input asp-for="StartDate" class="form-control" disabled />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Duration" class="form-label"></label>
-                <input asp-for="Duration" class="form-control" />
+                <input asp-for="Duration" class="form-control" disabled />
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="CategoryId" class="form-label"></label>
-                <select asp-for="CategoryId" asp-items="@Model.Categories" class="form-control">
+                <select asp-for="CategoryId" asp-items="@Model.Categories" class="form-control" disabled>
                     <option value="">Select a category</option>
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <input asp-for="CreationDate" class="form-control" hidden/>
-            </div>
-
-            <button type="submit" class="btn btn-primary text-light mt-4">Save</button>
+            <button type="submit" class="btn btn-danger text-light mt-4">Delete</button>
         </div>
 
     </div>

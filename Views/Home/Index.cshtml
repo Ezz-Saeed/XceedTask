@@ -1,8 +1,83 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using XceedTask.Models
+@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Index";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<table class="table table-bordered border-primary mt-5">
+    <thead>
+        <tr class="border-primary">
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">CreationDate</th>
+            <th scope="col">StartDate</th>
+            <th scope="col">Duration</th>
+            <th scope="col">User</th>
+            <th scope="col">Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr class="border border-primary">
+
+                <td>
+                    <div class="d-flex">
+                        <div class="d-flex flex-column justify-content-center">
+                            <p>@product.Name</p>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="d-flex">
+                        <div class="d-flex flex-column justify-content-center">
+                            <p>@product.Price</p>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="d-flex">
+                        <div class="d-flex flex-column justify-content-center">
+                            <p>@product.CreationDate</p>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="d-flex">
+                        <div class="d-flex flex-column justify-content-center">
+                            <p>@product.StartDate</p>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="d-flex">
+                        <div class="d-flex flex-column justify-content-center">
+                            <p>@product.Duration</p>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="d-flex">
+                        <div class="d-flex flex-column justify-content-center">
+                            <p>@product.User.UserName</p>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="d-flex">
+                        <div class="d-flex flex-column justify-content-center">
+                            <p>@product.Category.Name</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

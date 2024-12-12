@@ -1,21 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using XceedTask.Models;
+using XceedTask.Services;
 
 namespace XceedTask.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductService productService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductService productService)
         {
             _logger = logger;
+            this.productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var products = await productService.GetProducts(p=>p.StartDate <= DateTime.Now && 
+            p.StartDate.AddDays(p.Duration) > DateTime.Now);
+            return View(products);
         }
 
         public IActionResult Privacy()

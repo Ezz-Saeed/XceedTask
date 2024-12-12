@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using XceedTask.Data;
 using XceedTask.Models;
@@ -20,6 +21,7 @@ namespace XceedTask.Services
                 Duration = viewModel.Duration,
                 CategoryId = viewModel.CategoryId,
                 UserId = appUser.Id,
+                CreationDate = DateTime.Now,
             };
             await context.Products.AddAsync(product);
 
@@ -29,9 +31,10 @@ namespace XceedTask.Services
             return product;
         }
 
-        public async Task<IEnumerable<Product>> GetProducts()
+        public async Task<IEnumerable<Product>> GetProducts(Expression<Func<Product, bool>>? expression)
         {
-            return await context.Products.Include(p=>p.Category).Include(p=> p.User).ToListAsync();
+            return await context.Products.Include(p=>p.Category).
+                Include(p=> p.User).Where(expression).ToListAsync();
         }
 
         public async Task<IEnumerable<SelectListItem>> GetCategories()
@@ -49,15 +52,23 @@ namespace XceedTask.Services
             return product;
         }
 
-        public async Task<Product> UpdateProduct(UpdateProductViewModel viewModel)
+        public async Task<Product> UpdateProduct(Product product)
         {
-            var product = mapper.Map<UpdateProductViewModel, Product>(viewModel);
-
             context.Products.Update(product);
             var result = await context.SaveChangesAsync();
 
             if (result <= 0) return null;
             return product;
+        }
+
+        public async Task<bool> Delete(UpdateProductViewModel viewModel)
+        {
+            var product = await context.Products.FindAsync(viewModel.id);
+            if (product is null) return false;
+            context.Products.Remove(product);
+            var result = await context.SaveChangesAsync();
+            if (result <= 0) return false;
+            return true;
         }
     }
 }
