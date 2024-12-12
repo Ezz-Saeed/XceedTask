@@ -85,5 +85,12 @@ namespace XceedTask.Controllers
             await signInManager.SignInAsync(user, isPersistent: false);
             return RedirectToAction("Index", "Home");
         }
+
+
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction(nameof(Index), "Home");
+        }
     }
 }

@@ -25,9 +25,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li> *@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="GetProducts">Products</a>
-                        </li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="GetProducts">Products</a>
+                            </li>
+                        }
                     </ul>
 
                     <ul class="navbar-nav">
@@ -46,7 +49,7 @@
                                 <a class="nav-link text-dark" href="#">Welcome @User.Identity.Name</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-action="Logout" asp-controller="Account">Logout</a>
+                                <a class="nav-link text-dark" asp-action="Logout" asp-controller="Accounts">Logout</a>
                             </li>
                         }
                     </ul>
